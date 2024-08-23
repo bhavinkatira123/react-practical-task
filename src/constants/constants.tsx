@@ -8,6 +8,7 @@ export const campaignData: IData[] = [
     score: 157000,
     originalIndex: 0,
     translateY: 0,
+    additionalIndex: 0,
   },
   {
     userID: "u-2",
@@ -16,6 +17,7 @@ export const campaignData: IData[] = [
     score: 46200,
     originalIndex: 1,
     translateY: 0,
+    additionalIndex: 0,
   },
   {
     userID: "u-3",
@@ -24,6 +26,7 @@ export const campaignData: IData[] = [
     score: 38800,
     originalIndex: 2,
     translateY: 0,
+    additionalIndex: 0,
   },
   {
     userID: "u-4",
@@ -32,6 +35,7 @@ export const campaignData: IData[] = [
     score: 33400,
     originalIndex: 3,
     translateY: 0,
+    additionalIndex: 0,
   },
   {
     userID: "u-5",
@@ -40,6 +44,7 @@ export const campaignData: IData[] = [
     score: 31600,
     originalIndex: 4,
     translateY: 0,
+    additionalIndex: 0,
   },
   {
     userID: "u-6",
@@ -48,6 +53,7 @@ export const campaignData: IData[] = [
     score: 30800,
     originalIndex: 5,
     translateY: 0,
+    additionalIndex: 0,
   },
   {
     userID: "u-7",
@@ -56,6 +62,7 @@ export const campaignData: IData[] = [
     score: 22300,
     originalIndex: 6,
     translateY: 0,
+    additionalIndex: 0,
   },
   {
     userID: "u-8",
@@ -64,6 +71,7 @@ export const campaignData: IData[] = [
     score: 17800,
     originalIndex: 7,
     translateY: 0,
+    additionalIndex: 0,
   },
   {
     userID: "u-9",
@@ -72,6 +80,7 @@ export const campaignData: IData[] = [
     score: 17300,
     originalIndex: 8,
     translateY: 0,
+    additionalIndex: 0,
   },
   {
     userID: "u-10",
@@ -80,5 +89,6 @@ export const campaignData: IData[] = [
     score: 15400,
     originalIndex: 9,
     translateY: 0,
+    additionalIndex: 0,
   },
 ];

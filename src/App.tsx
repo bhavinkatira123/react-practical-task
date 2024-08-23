@@ -2,6 +2,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { campaignData } from "./constants/constants";
+import { IData } from "./constants/interface";
 
 interface IndexNumberProps {
   index: number;
@@ -61,10 +62,12 @@ const Score = styled.td`
 const Row = styled.tr<IRowProps>`
   transform: translateY(${(props) => props.translateY}px);
   transition: transform 0.5s ease-in-out;
+  height: 50px;
 `;
 
 const App = (): ReactElement => {
-  const [campaignDataState, setCampaignDataState] = useState(campaignData);
+  const [campaignDataState, setCampaignDataState] =
+    useState<IData[]>(campaignData);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -89,10 +92,12 @@ const App = (): ReactElement => {
       (item, newIndex) => {
         const oldIndex = item.originalIndex;
         const translateY = (oldIndex - newIndex) * 50;
+        const occurrence = Math.abs(translateY) / 50;
         return {
           ...item,
           translateY,
           originalIndex: newIndex,
+          additionalIndex: translateY > 0 ? occurrence : -occurrence,
         };
       }
     );
@@ -109,7 +114,9 @@ const App = (): ReactElement => {
         return (
           <Row key={index} translateY={campaign.translateY}>
             <NameContainer>
-              <IndexNumber index={index}>{index + 1}</IndexNumber>
+              <IndexNumber index={index}>
+                {index + 1 + campaign.additionalIndex}
+              </IndexNumber>
               <Name>{campaign.displayName}</Name>
             </NameContainer>
             <Score>{campaign.score}pt</Score>

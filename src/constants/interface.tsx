@@ -6,4 +6,5 @@ export interface IData {
   originalIndex: number;
   className?: string;
   translateY: number;
+  additionalIndex: number;
 }
