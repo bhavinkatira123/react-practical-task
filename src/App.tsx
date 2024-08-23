@@ -1,26 +1,123 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { ReactElement, useEffect, useState } from "react";
+import styled from "styled-components";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { campaignData } from "./constants/constants";
+
+interface IndexNumberProps {
+  index: number;
 }
+
+interface IRowProps {
+  translateY: number;
+}
+
+const Table = styled.table`
+  padding: 20px;
+  width: 100%;
+`;
+
+const NameContainer = styled.td`
+  display: flex;
+  align-items: center;
+  transition: all 0.5s ease-in-out; /* Adjust transition time for smoother effect */
+`;
+
+const IndexNumber = styled.p<IndexNumberProps>`
+  margin: 0;
+  background-color: ${(props) => {
+    switch (props.index) {
+      case 0:
+        return "red";
+      case 1:
+        return "#ff7527";
+      case 2:
+        return "orange";
+      default:
+        return "#6cbdfb";
+    }
+  }};
+  height: 27px;
+  width: 27px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  color: white;
+`;
+
+const Name = styled.p`
+  margin-left: 15px;
+`;
+
+const Score = styled.td`
+  color: #e33957;
+  text-align: center;
+  line-height: 50px;
+  height: 50px;
+  transition: all 0.5s ease-in-out;
+`;
+
+const Row = styled.tr<IRowProps>`
+  transform: translateY(${(props) => props.translateY}px);
+  transition: transform 0.5s ease-in-out;
+`;
+
+const App = (): ReactElement => {
+  const [campaignDataState, setCampaignDataState] = useState(campaignData);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      applyRandomSoreToStreamers();
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  const applyRandomSoreToStreamers = (): void => {
+    const tempCampaignDataState = campaignDataState.map((data, index) => ({
+      ...data,
+      originalIndex: index,
+      score: getRandomScore(data.score),
+    }));
+
+    tempCampaignDataState.sort((a, b) => b.score - a.score);
+
+    const newCampaignDataWithPosition = tempCampaignDataState.map(
+      (item, newIndex) => {
+        const oldIndex = item.originalIndex;
+        const translateY = (oldIndex - newIndex) * 50;
+        return {
+          ...item,
+          translateY,
+          originalIndex: newIndex,
+        };
+      }
+    );
+
+    setCampaignDataState(newCampaignDataWithPosition);
+  };
+
+  const getRandomScore = (score: number): number =>
+    Math.floor(Math.random() * 5000) + score + 1;
+
+  return (
+    <Table>
+      {campaignDataState.map((campaign, index) => {
+        return (
+          <Row key={index} translateY={campaign.translateY}>
+            <NameContainer>
+              <IndexNumber index={index}>{index + 1}</IndexNumber>
+              <Name>{campaign.displayName}</Name>
+            </NameContainer>
+            <Score>{campaign.score}pt</Score>
+          </Row>
+        );
+      })}
+    </Table>
+  );
+};
 
 export default App;
